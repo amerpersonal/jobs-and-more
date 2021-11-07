@@ -29,24 +29,23 @@ end
 # t.string :address
 # t.string :competence, limit: 3
 
-competences = ["VSS", "SSS", "NK"]
+competencies = ["VSS", "SSS", "NK"]
 
-def transform_to_model(person)
+def transform_to_model(person, competencies)
   {
     first_name: person["name"]["first"],
     last_name: person["name"]["last"],
     birth_date: person["dob"]["date"],
     phone_number: person["cell"],
     email: person["email"],
-    address: person["location"]["street"]["name"] + " " + person["location"]["street"]["number"],
-    competence: competences.sample
-
+    address: person["location"]["street"]["name"] + " " + person["location"]["street"]["number"].to_s,
+    competence: competencies.sample
   }
 end
 
 puts "people #{people.size}" + people[0].inspect
 
-people_transformed = people.map { |p| transform_to_model(p) }
+people_transformed = people.map { |p| transform_to_model(p, competencies) }
 
 
 puts "people_transformed #{people.size}" + people_transformed[0].inspect
@@ -81,8 +80,19 @@ step = 2
 job_attrs = []
 
 positions = [
-  { title: 'Software Developer', description: 'Some random description' },
-  { title: 'UI/UX designer', description: 'Some random description' }
+  {
+    title: 'Software Developer',
+    description: 'Work full-time at top Silicon Valley or other U.S. companies.
+                  Earn a better salary compared to local companies in your city.
+                  Grow as a developer by working with the smartest engineers from all over the world.
+                  Get paid monthly directly to your bank account. Forget about issues with PayPal or Payoneer.' },
+
+  {
+    title: 'UI/UX designer',
+    description: 'UX-UI Designers are generally responsible for collecting, researching,
+                  investigating and evaluating user requirements. Their responsibility is
+                  to deliver an outstanding user experience providing an exceptional and intuitive application design.'
+  }
 ]
 companies.each  do |company|
 
@@ -101,7 +111,16 @@ companies.each  do |company|
   end
 end
 
-jobs = Jobs.create(job_attrs)
+jobs = Job.create(job_attrs)
+
+jobs_applications = people_transformed.map { |person|
+  person.merge(job: jobs[0, jobs.length / 2].sample)
+}
+
+Application.create(jobs_applications)
+
+
+
 
 
 
