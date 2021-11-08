@@ -10,7 +10,7 @@ require 'json'
 
 categories_names = ['IT', 'Cleaning', 'Construction', 'Mechanical engineering', 'Architecture', 'Sales', 'Support']
 
-categories = Category.create(categories_names.map { |c| :title => c } )
+categories = Category.create(categories_names.map { |c| { title: c } } )
 
 url = "https://randomuser.me/api/?results=100&inc=name,location,email,dob,cell,picture"
 
