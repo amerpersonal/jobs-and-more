@@ -41,7 +41,7 @@ class Job < ApplicationRecord
     if expired?
       "Job posting expired " + (started_before - duration).to_s + " days ago"
     else
-      "Job posting opened for " + started_before + "days, expires in " + expires_in + " days"
+      "Job posting opened " + started_before.to_s + " day ago, expires in " + expires_in.to_s + " days"
     end
   end
 end

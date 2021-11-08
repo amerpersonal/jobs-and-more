@@ -74,7 +74,7 @@ companies_attrs = [
 
 companies = Company.create(companies_attrs)
 
-start_date = DateTime.now - 30
+start_date = DateTime.now - 15
 duration = 7 # days
 step = 2
 job_attrs = []

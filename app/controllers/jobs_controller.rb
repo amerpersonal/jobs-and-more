@@ -3,7 +3,7 @@ class JobsController < ApplicationController
 
   # GET /jobs or /jobs.json
   def index
-    @jobs = Job.all
+    @jobs = Job.where('start_date <= ?', Time.zone.now).sort_by { |job| job.expires_in }.reverse
 
     puts "evo " + ((Time.zone.now - @jobs[0].start_date) / 1.day).to_i.to_s
   end
