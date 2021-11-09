@@ -16,7 +16,7 @@ class JobApplicationsController < ApplicationController
     if @job_application.save
       flash[:notice] = "You successfully applied for a job #{@job_application.job.title} at #{@job_application.job.company.name}"
 
-      JobApplicationMailer.with(job_application: @job_application).job_applied_email.deliver_now
+      JobApplicationMailer.job_applied_email(@job_application).deliver_now
 
       redirect_to jobs_path
     else

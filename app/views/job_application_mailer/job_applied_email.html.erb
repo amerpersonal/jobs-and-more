@@ -3,7 +3,7 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-<h1><%= @job_application.first_name + ' ' + @job_application.last_name %> successfully applied for a job <%= @job_application.job.title %></h1>
+<h1>You successfully applied for a job <%= @job_application.job.title %></h1>
 <p>
   Contact info
   <ul>
@@ -14,7 +14,7 @@
   </ul>
 </p>
 <p>
-  For more jobs, open: <%= jobs_path %>. Happy browsing!
+  For more jobs, open: <a href="#">Jobs page</a>. Happy browsing!
 </p>
 <p>Thanks for applying and have a great day!</p>
 </body>
