@@ -117,7 +117,7 @@ jobs_applications = people_transformed.map { |person|
   person.merge(job: jobs[0, jobs.length / 2].sample)
 }
 
-Application.create(jobs_applications)
+JobApplicationValidation.create(jobs_applications)
 
 
 

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :jobs do
-    resources :applications, only: ["new", "create"]
+    resources :job_applications, only: ["new", "create"]
   end
 
   resources :companies

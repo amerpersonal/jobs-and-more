@@ -1,7 +1,11 @@
-<p id="notice" xmlns="http://www.w3.org/1999/html"><%= notice %></p>
 
 <div class="container">
-  <!--  <div class="row">-->
+  <% flash.each do |type, message| %>
+    <div class="alert alert-success" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
   <% @jobs.each do |job| %>
     <% apply_btn_class = "btn btn-primary btn-sm small" %>
     <% if job.expired?  %>
@@ -60,9 +64,9 @@
         </div>
 
         <div class="row mt-2 btn-sm">
-          <div><a href="<%= new_job_application_path(job) %>" class="<%= apply_btn_class %>">Apply now</a></div>
+          <div><a href="<%= new_job_job_application_path(job) %>" class="<%= apply_btn_class %>">Apply now</a></div>
           <div class="pl-2">
-            <a href="#" class="badge badge-info" data-toggle="tooltip" data-placement="right" title="<%= job.applications.size %> people applied to this job"><%= job.applications.size %></a>
+            <a href="#" class="badge badge-info" data-toggle="tooltip" data-placement="right" title="<%= job.job_applications.size %> people applied to this job"><%= job.job_applications.size %></a>
           </div>
         </div>
       </div>

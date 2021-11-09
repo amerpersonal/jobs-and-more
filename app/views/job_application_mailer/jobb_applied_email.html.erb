@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1><%= @job_application.first_name + ' ' + @job_application.last_name %> successfully applied for a job <%= @job_application.job.title %></h1>
+<p>
+  Contact info
+  <ul>
+    <li>Phone: <%= @job_application.phone_number %></li>
+    <li>Email: <%= @job_application.email %></li>
+    <li>Birth date: <%= @job_application.birth_date %></li>
+    <li>Competence: <%= @job_application.competence %></li>
+  </ul>
+</p>
+<p>
+  For more jobs, open: <%= jobs_path %>. Happy browsing!
+</p>
+<p>Thanks for applying and have a great day!</p>
+</body>
+</html>
