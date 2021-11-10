@@ -5,6 +5,4 @@ class Job < ApplicationRecord
   has_many :job_applications
 
   include JobExpiration
-
-
 end

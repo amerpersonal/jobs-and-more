@@ -1,3 +1,6 @@
+require 'active_support'
+require 'active_support/core_ext/date/calculations'
+
 module JobApplicationValidation
   extend ActiveSupport::Concern
 
@@ -15,9 +18,16 @@ module JobApplicationValidation
     validates :phone_number, presence: true, length: { minimum: 5 }, format: { with: PHONE_REGEX_PATTERN }
     validates :address, presence: true, length: { minimum: 5 }
     validates :email, uniqueness: { scope: :job_id, message: "You already applied to this job" }
+    
+    validate :validate_age
+
+    def validate_age
+      birth_date.present? && birth_date > 18.years.ago
+    end
   end
 
   def valid_competences
     VALID_COMPETENCES
   end
+
 end
