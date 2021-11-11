@@ -1,32 +1,29 @@
 require 'rails_helper'
 require 'date'
+require 'utils/validators/common'
 
 RSpec.describe JobApplication, type: :model do
-  before(:all) do
-    Job.destroy_all
-    Company.destroy_all
-    Category.destroy_all
-  end
+  let(:category) { Category.create(title: "Dummy category") }
+  let(:company) { Company.create(name: "Some company", email: "some.company@gmail.com") }
+  let(:job) { Job.create(
+    title: "job title",
+    description: 'job description',
+    start_date: Date.today,
+    end_date: Date.today,
+    category: category,
+    company: company)
+  }
 
-  subject {
-    @category = Category.new(title: "Dummy category")
-    @company = Company.new(name: "Some company", email: "some.company@gmail.com")
-    @job = Job.new(title: "job title", description: 'job description', start_date: Date.today, end_date: Date.today, category: @category, company: @company)
-
-    @category.save!
-    @company.save!
-    @job.save!
-
-    described_class.new(
-      first_name: "John",
-      last_name: "Doe",
-      birth_date: Date.today - 15.years,
-      email: "neko@example.com",
-      phone_number: "0038761522222",
-      address: "Avenue 88",
-      competence: "VSS",
-      job_id: @job.id
-    )
+  let(:subject) { JobApplication.new(
+        first_name: "John",
+        last_name: "Doe",
+        birth_date: Date.today - 18.years,
+        email: "neko@example.com",
+        phone_number: "0038761522222",
+        address: "Avenue 88",
+        competence: "VSS",
+        job_id: job.id
+      )
   }
 
   it "is not valid when empty" do
@@ -34,7 +31,42 @@ RSpec.describe JobApplication, type: :model do
     expect(empty).to_not be_valid
   end
 
-  it "is valid when all attributes set" do
+  it "is not valid when candidate is younger than 18" do
+    subject.birth_date = Date.today - 17.years
+    expect(subject).not_to be_valid
+  end
+
+  it "is not valid when phone number is empty" do
+    subject.phone_number = ""
+    expect(subject).not_to be_valid
+  end
+
+  it "is not valid when phone number contains spaces only" do
+    subject.phone_number = "      "
+    expect(subject).not_to be_valid
+  end
+
+  it "is not valid when phone number contains letter" do
+    subject.phone_number = "1232323a"
+    expect(subject).to_not be_valid
+  end
+
+  it "is valid when phone number contains numbers only" do
+    subject.phone_number = "1232323123"
+    expect(subject).to be_valid
+  end
+
+  it "is valid when phone number contains numbers and space at the beginning" do
+    subject.phone_number = "1232323122"
+    expect(subject).to be_valid
+  end
+
+  it "is valid when phone number contains numbers and multiple spaces" do
+    subject.phone_number = "+1 232 323 22"
+    expect(subject).to be_valid
+  end
+
+  it "is valid when all attributes are valid" do
     expect(subject).to be_valid
   end
 

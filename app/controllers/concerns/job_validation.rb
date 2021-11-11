@@ -1,5 +1,9 @@
-module JobExpiration
+module JobValidation
   extend ActiveSupport::Concern
+
+  included do
+    # logic here
+  end
 
   def duration
     ((end_date - start_date) / 1.day).to_i

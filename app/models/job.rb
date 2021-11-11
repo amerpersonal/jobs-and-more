@@ -4,5 +4,5 @@ class Job < ApplicationRecord
 
   has_many :job_applications
 
-  include JobExpiration
+  include JobValidation
 end
