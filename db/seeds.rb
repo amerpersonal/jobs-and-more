@@ -21,14 +21,6 @@ if (response.status == 200)
   people = JSON.parse(response.body)['results']
 end
 
-# t.string :first_name, limit: 30
-# t.string :last_name, limit: 30
-# t.date :birth_date
-# t.string :email
-# t.string :phone_number, limit: 15
-# t.string :address
-# t.string :competence, limit: 3
-
 competencies = ["VSS", "SSS", "NK"]
 
 def transform_to_model(person, competencies)
@@ -43,26 +35,7 @@ def transform_to_model(person, competencies)
   }
 end
 
-puts "people #{people.size}" + people[0].inspect
-
 people_transformed = people.map { |p| transform_to_model(p, competencies) }
-
-
-puts "people_transformed #{people.size}" + people_transformed[0].inspect
-
-# t.string :title
-# t.text :description
-# t.datetime :start_date
-# t.datetime :end_date
-# t.references :category, null: false, foreign_key: true
-# t.references :company, null: false, foreign_key: true
-
-# create_table :companies do |t|
-#   t.string :name, limit: 100
-#   t.string :email
-#
-#   t.timestamps
-# end
 
 companies_attrs = [
   { name: 'Ingemark', email: 'info@ingemark.com' },
