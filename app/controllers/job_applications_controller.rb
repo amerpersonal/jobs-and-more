@@ -1,13 +1,12 @@
 class JobApplicationsController < ApplicationController
+  before_action :set_job, only: %i[ new create index ]
+
   # GET /jobs/:job_id/job_applications/new
   def new
-    @job = Job.find(params[:job_id])
-
     @job_application = @job.job_applications.build
   end
 
   def create
-    @job = Job.find(params[:job_id])
     @job_application = @job.job_applications.create(job_application_params)
 
     if @job_application.save
@@ -21,9 +20,17 @@ class JobApplicationsController < ApplicationController
     end
   end
 
+  def index
+    @job_applications = @job.job_applications.sort_by { |job| job.id }.reverse #JobApplication.where(job_id: params[:job_id]).order("id desc")
+  end
+
   private
   def job_application_params
     params.require(:job_application).permit(:first_name, :last_name, :email, :phone_number, :address, :birth_date, :competence)
+  end
+
+  def set_job
+    @job = Job.find(params[:job_id])
   end
 
 end

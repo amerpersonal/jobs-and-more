@@ -13,14 +13,6 @@ module JobValidation
     end
   end
 
-  # t.string :title
-  # t.text :description
-  # t.datetime :start_date
-  # t.datetime :end_date
-  # t.references :category, null: false, foreign_key: true
-  # t.references :company, null: false, foreign_key: true
-
-
   def duration
     ((end_date - start_date) / 1.day).to_i
   end

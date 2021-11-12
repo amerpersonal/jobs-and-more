@@ -7,90 +7,95 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faraday'
 require 'json'
+require 'generators/data_generator'
 
-categories_names = ['IT', 'Cleaning', 'Construction', 'Mechanical engineering', 'Architecture', 'Sales', 'Support']
+include Generators::DataGenerator
 
-categories = Category.create(categories_names.map { |c| { title: c } } )
+ActiveRecord::Base.transaction do
+  begin
+    categories_names = ['IT', 'Cleaning', 'Construction', 'Mechanical engineering', 'Architecture', 'Sales', 'Support']
 
-url = "https://randomuser.me/api/?results=100&inc=name,location,email,dob,cell,picture"
+    categories = Category.create(categories_names.map { |c| { title: c } })
 
-response = Faraday.get url
+    people = dummy_persons
 
-people = []
-if (response.status == 200)
-  people = JSON.parse(response.body)['results']
-end
+    competencies = ["VSS", "SSS", "NK"]
 
-competencies = ["VSS", "SSS", "NK"]
+    def transform_to_model(person, competencies)
+      {
+        first_name: person["name"]["first"],
+        last_name: person["name"]["last"],
+        birth_date: person["dob"]["date"],
+        phone_number: person["cell"],
+        email: person["email"],
+        address: person["location"]["street"]["name"] + " " + person["location"]["street"]["number"].to_s,
+        competence: competencies.sample
+      }
+    end
 
-def transform_to_model(person, competencies)
-  {
-    first_name: person["name"]["first"],
-    last_name: person["name"]["last"],
-    birth_date: person["dob"]["date"],
-    phone_number: person["cell"],
-    email: person["email"],
-    address: person["location"]["street"]["name"] + " " + person["location"]["street"]["number"].to_s,
-    competence: competencies.sample
-  }
-end
+    people_transformed = people.map { |p| transform_to_model(p, competencies) }
 
-people_transformed = people.map { |p| transform_to_model(p, competencies) }
+    companies_attrs = [
+      { name: 'Ingemark', email: 'info@ingemark.com' },
+      { name: 'Amers', email: 'amer.zildzic@gmail.com' },
+      { name: 'Ministry of Programming', email: 'info@mop.ba' },
+      { name: 'Personal', email: 'info@personal.ba' },
+      { name: 'Logosoft', email: 'info@logosoft.ba' }
+    ]
 
-companies_attrs = [
-  { name: 'Ingemark', email: 'info@ingemark.com' },
-  { name: 'Amers', email: 'amer.zildzic@gmail.com' },
-  { name: 'Ministry of Programming', email: 'info@mop.ba' },
-  { name: 'Personal', email: 'info@personal.ba' },
-  { name: 'Logosoft', email: 'info@logosoft.ba' }
-]
+    companies = Company.create(companies_attrs)
 
-companies = Company.create(companies_attrs)
+    start_date = DateTime.now - 15
+    duration = 7 # days
+    step = 2
+    job_attrs = []
 
-start_date = DateTime.now - 15
-duration = 7 # days
-step = 2
-job_attrs = []
-
-positions = [
-  {
-    title: 'Software Developer',
-    description: 'Work full-time at top Silicon Valley or other U.S. companies.
+    positions = [
+      {
+        title: 'Software Developer',
+        description: 'Work full-time at top Silicon Valley or other U.S. companies.
                   Earn a better salary compared to local companies in your city.
                   Grow as a developer by working with the smartest engineers from all over the world.
                   Get paid monthly directly to your bank account. Forget about issues with PayPal or Payoneer.' },
 
-  {
-    title: 'UI/UX designer',
-    description: 'UX-UI Designers are generally responsible for collecting, researching,
+      {
+        title: 'UI/UX designer',
+        description: 'UX-UI Designers are generally responsible for collecting, researching,
                   investigating and evaluating user requirements. Their responsibility is
                   to deliver an outstanding user experience providing an exceptional and intuitive application design.'
-  }
-]
-companies.each  do |company|
+      }
+    ]
+    companies.each do |company|
 
-  positions.each do |position|
-    attrs = {
-      title: position[:title],
-      description: position[:description],
-      start_date: start_date,
-      end_date: start_date + duration,
-      company: company,
-      category: categories[0]
+      positions.each do |position|
+        attrs = {
+          title: position[:title],
+          description: position[:description],
+          start_date: start_date,
+          end_date: start_date + duration,
+          company: company,
+          category: categories[0]
+        }
+
+        job_attrs.push(attrs)
+        start_date = start_date + step
+      end
+    end
+
+    jobs = Job.create(job_attrs)
+
+    jobs_applications = people_transformed.map { |person|
+      person.merge(job: jobs[0, jobs.length / 2].sample)
     }
 
-    job_attrs.push(attrs)
-    start_date = start_date + step
+    JobApplication.create(jobs_applications)
+
+    User.create! :first_name => 'Amer', :last_name => "Zildzic", :email => 'amer.zildzic@gmail.com', :password => 'topsecret', :password_confirmation => 'topsecret'
+  rescue => ex
+    puts "Error on seeding: #{ex.message}. Will do rollback..."
+    raise ActiveRecord::Rollback
   end
 end
-
-jobs = Job.create(job_attrs)
-
-jobs_applications = people_transformed.map { |person|
-  person.merge(job: jobs[0, jobs.length / 2].sample)
-}
-
-JobApplication.create(jobs_applications)
 
 
 

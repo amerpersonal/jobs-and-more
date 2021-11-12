@@ -2,6 +2,7 @@ module Utils
   module Validators
     module Common
       PHONE_NUMBER_MIN_DIGITS = 9
+      VALID_COMPETENCES = ["VSS", "SSS", "NS"]
 
       def numeric?(lookAhead)
         lookAhead.match?(/[[:digit:]]/)

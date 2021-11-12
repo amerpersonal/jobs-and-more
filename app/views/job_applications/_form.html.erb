@@ -1,17 +1,5 @@
 <div class="container">
 
-  <div class="card mb-5 mt-3 bg-light">
-    <div class="card-header">
-      You're applying for a position <%= @job_application.job.title %> at <%= @job_application.job.company.name %>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Job posted <%= pluralize(@job_application.job.started_before, "day") %> ago. Expires
-        in <%= pluralize(@job_application.job.expires_in, "day") %></h5>
-      <p class="card-text"><%= pluralize(@job_application.job.job_applications.size, "person") %> already applied for
-        this job</p>
-    </div>
-  </div>
-
   <%= form_with(model: job_application, url: job_job_applications_path) do |form| %>
     <div class="form-group row">
       <div class="col-3"><%= form.label :first_name %></div>

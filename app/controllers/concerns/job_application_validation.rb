@@ -5,7 +5,6 @@ require 'utils/validators/common'
 module JobApplicationValidation
   extend ActiveSupport::Concern
 
-  VALID_COMPETENCES = ["VSS", "SSS", "NS"]
   EMAIL_REGEX_PATTERN = /\A(.+)@(.+)\z/
   NAME_REGEX_PATTERN = /\A[^0-9`!@#\$%\^&*+_=]+\z/ # /^[a-z ,.'-]+$/  #[a-zA-Z]\z/
 

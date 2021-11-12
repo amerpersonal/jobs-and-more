@@ -1,0 +1,11 @@
+<div class="card mb-5 mt-3 bg-light">
+  <div class="card-header">
+    You're applying for a position <%= job.title %> at <%= job.company.name %>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Job posted <%= pluralize(job.started_before, "day") %> ago. Expires
+      in <%= pluralize(job.expires_in, "day") %></h5>
+    <p class="card-text"><%= pluralize(job.job_applications.size, "person") %> already applied for
+      this job</p>
+  </div>
+</div>

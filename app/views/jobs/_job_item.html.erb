@@ -1,5 +1,5 @@
 <% apply_btn_class = "btn btn-primary btn-sm small apply" %>
-<% if job.expired?  %>
+<% if job.expired? %>
   <% apply_btn_class += " disabled" %>
 <% end %>
 
@@ -22,7 +22,8 @@
 
     <div class="card border-0 bg-light collapse" id="job<%= job.id %>">
       <div class="row">
-        <div class="pr-5"><i class="bi bi-mailbox pr-2"></i><a href="mailto:<%= job.company.email %>"><%= job.company.email %></a></div>
+        <div class="pr-5">
+          <i class="bi bi-mailbox pr-2"></i><a href="mailto:<%= job.company.email %>"><%= job.company.email %></a></div>
         <div class="pr-5"><i class="bi bi-calendar pr-2"></i><%= job.company.created_at %></div>
       </div>
     </div>
@@ -55,10 +56,22 @@
     </div>
 
     <div class="row mt-2 btn-sm">
-      <div><a href="<%= new_job_job_application_path(job) %>" class="<%= apply_btn_class %>">Apply now</a></div>
-      <div class="pl-2">
-        <a href="#" class="badge badge-info job-applications-count" data-toggle="tooltip" data-placement="right" title="<%= job.job_applications.size %> people applied to this job"><%= job.job_applications.size %></a>
+      <div class="col-6">
+        <div class="row">
+          <div>
+            <a href="<%= new_job_job_application_path(job) %>" class="<%= apply_btn_class %>">Apply now</a>
+          </div>
+          <div class="pl-2">
+            <a href="#" class="badge badge-info job-applications-count" data-toggle="tooltip" data-placement="right" title="<%= job.job_applications.size %> people applied to this job"><%= job.job_applications.size %></a>
+          </div>
+        </div>
       </div>
+      <% if user_signed_in? %>
+        <div class="float-right ml-auto">
+          <%= link_to "Applications", job_job_applications_path(job), class: "btn btn-sm btn-success" %>
+          <%= link_to "Remove job", job_path(job), method: "delete", class: "btn btn-sm btn-danger", data: { confirm: "Are you sure you want to remove job #{job.title} at #{job.company.name}" } %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
