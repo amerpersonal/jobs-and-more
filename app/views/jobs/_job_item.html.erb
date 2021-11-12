@@ -1,0 +1,64 @@
+<% apply_btn_class = "btn btn-primary btn-sm small apply" %>
+<% if job.expired?  %>
+  <% apply_btn_class += " disabled" %>
+<% end %>
+
+<div class="card bg-light mb-2 border-0 p-2 job-item">
+  <div class="card-body">
+    <div>
+      <a class="text-dark text-decoration-none" data-toggle="collapse" role="button" href="#job<%= job.id %>" aria-expanded="false" aria-controls="job<%= job.id %>">
+        <div class="row">
+          <div>
+            <h5 class="card-title">
+              <%= job.company.name %>
+            </h5>
+          </div>
+          <div class="pl-2">
+            <span class="badge badge-dark"><%= job.category.title %></span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="card border-0 bg-light collapse" id="job<%= job.id %>">
+      <div class="row">
+        <div class="pr-5"><i class="bi bi-mailbox pr-2"></i><a href="mailto:<%= job.company.email %>"><%= job.company.email %></a></div>
+        <div class="pr-5"><i class="bi bi-calendar pr-2"></i><%= job.company.created_at %></div>
+      </div>
+    </div>
+
+    <hr class="my-4">
+    <div class="row">
+      <div class="col pl-0">
+        <div class="row pl-3 justify-content-start">
+          <div>
+            <p class="card-text lead"><%= job.title %></p>
+          </div>
+          <div>
+            <% if job.expired? %>
+              <span class="badge badge-danger ml-2">Expired</span>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-3">
+        <div class="progress" data-toggle="tooltip" data-placement="top" title="<%= job.progress_tooltip_text %>">
+          <div class="progress-bar" role="progressbar" style="width: <%= job.progress_value_percentage %>%" aria-valuenow="<%= job.progress_value %>" aria-valuemin="0" aria-valuemax="<%= job.duration %>"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <p class="font-weight-light small"><%= job.description %></p>
+
+    </div>
+
+    <div class="row mt-2 btn-sm">
+      <div><a href="<%= new_job_job_application_path(job) %>" class="<%= apply_btn_class %>">Apply now</a></div>
+      <div class="pl-2">
+        <a href="#" class="badge badge-info job-applications-count" data-toggle="tooltip" data-placement="right" title="<%= job.job_applications.size %> people applied to this job"><%= job.job_applications.size %></a>
+      </div>
+    </div>
+  </div>
+</div>

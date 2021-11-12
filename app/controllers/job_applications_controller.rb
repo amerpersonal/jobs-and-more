@@ -3,13 +3,10 @@ class JobApplicationsController < ApplicationController
   def new
     @job = Job.find(params[:job_id])
 
-    #puts "job " + @job.inspect
     @job_application = @job.job_applications.build
   end
 
   def create
-    puts "params: " + job_application_params.inspect
-
     @job = Job.find(params[:job_id])
     @job_application = @job.job_applications.create(job_application_params)
 

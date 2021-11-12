@@ -5,8 +5,10 @@
       You're applying for a position <%= @job_application.job.title %> at <%= @job_application.job.company.name %>
     </div>
     <div class="card-body">
-      <h5 class="card-title">Job posted <%= pluralize(@job_application.job.started_before, "day") %> ago. Expires in <%= pluralize(@job_application.job.expires_in, "day") %></h5>
-      <p class="card-text"><%= pluralize(@job_application.job.job_applications.size, "person") %> already applied for this job</p>
+      <h5 class="card-title">Job posted <%= pluralize(@job_application.job.started_before, "day") %> ago. Expires
+        in <%= pluralize(@job_application.job.expires_in, "day") %></h5>
+      <p class="card-text"><%= pluralize(@job_application.job.job_applications.size, "person") %> already applied for
+        this job</p>
     </div>
   </div>
 
@@ -15,76 +17,98 @@
       <div class="col-3"><%= form.label :first_name %></div>
       <div class="col-9">
         <%= form.text_field :first_name, class: "form-control" %>
-        <div class="col-9 text-danger small">
-          <%= job_application.errors.full_messages_for(:first_name).first %>
-        </div>
+        <% unless job_application.errors.full_messages_for(:first_name).empty? %>
+
+          <div class="col-9 text-danger small apply-form-error">
+            <%= job_application.errors.full_messages_for(:first_name).first %>
+          </div>
+        <% end %>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-3"><%= form.label :last_name %></div>
       <div class="col-9">
-      <%= form.text_field :last_name, class: "form-control" %>
-        <div class="col-9 text-danger small">
-          <%= job_application.errors.full_messages_for(:last_name).first %>
-        </div>
+        <%= form.text_field :last_name, class: "form-control" %>
+        <% unless job_application.errors.full_messages_for(:last_name).empty? %>
+          <div class="col-9 text-danger small apply-form-error">
+            <%= job_application.errors.full_messages_for(:last_name).first %>
+          </div>
+        <% end %>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-3"><%= form.label :birth_date %></div>
       <div class="col-9">
-      <%= form.text_field :birth_date, class: "form-control", "data-provide": "datepicker", "data-date-format": "yy-mm-dd" %>
-        <div class="col-9 text-danger small">
-          <%= job_application.errors.full_messages_for(:birth_date).first %>
-        </div>
+        <%= form.text_field :birth_date, class: "form-control", "data-provide": "datepicker", "data-date-format": "yy-mm-dd" %>
+        <% unless job_application.errors.full_messages_for(:birth_date).empty? %>
+
+          <div class="col-9 text-danger small apply-form-error">
+            <%= job_application.errors.full_messages_for(:birth_date).first %>
+          </div>
+        <% end %>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-3"><%= form.label :email %></div>
       <div class="col-9">
-      <%= form.email_field :email, class: "form-control" %>
-        <div class="col-9 text-danger small">
-          <%= job_application.errors.messages_for(:email).first %>
-        </div>
+        <%= form.email_field :email, class: "form-control" %>
+        <% unless job_application.errors.full_messages_for(:email).empty? %>
+
+          <div class="col-9 text-danger small apply-form-error">
+            <%= job_application.errors.messages_for(:email).first %>
+          </div>
+        <% end %>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-3"><%= form.label :phone_number %></div>
       <div class="col-9">
-      <%= form.phone_field :phone_number, class: "form-control", placeholder: 'Must be a valid for number, e.g 00 387 61 522 222' %>
-        <div class="col-9 text-danger small">
-          <%= job_application.errors.full_messages_for(:phone_number).first %>
-        </div>
+        <%= form.phone_field :phone_number, class: "form-control", placeholder: 'Must be a valid for number, e.g 00 387 61 522 222' %>
+        <% unless job_application.errors.full_messages_for(:phone_number).empty? %>
+
+          <div class="col-9 text-danger small apply-form-error">
+            <%= job_application.errors.full_messages_for(:phone_number).first %>
+          </div>
+        <% end %>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-3"><%= form.label :address %></div>
       <div class="col-9">
-      <%= form.text_field :address, class: "form-control" %>
-        <div class="col-9 text-danger small">
-          <%= job_application.errors.full_messages_for(:address).first %>
+        <%= form.text_field :address, class: "form-control" %>
+        <% unless job_application.errors.full_messages_for(:address).empty? %>
+          <div class="col-9 text-danger small apply-form-error">
+            <%= job_application.errors.full_messages_for(:address).first %>
+          </div>
+        <% end %>
         </div>
-      </div>
     </div>
 
     <% @job_application.valid_competences.each do |competence| %>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="<%= competence %>" name="job_application[competence]">
-        <label class="form-check-label" for="job_application[competence]"><%= competence %></label>
+<!--        <input class="form-check-input" type="radio" value="<%#= competence %>" name="job_application[competence]">-->
+<!--        <label class="form-check-label" for="job_application_competence_<%#= competence %>"><%#= competence %></label>-->
+
+        <%= form.label competence, class: "form-check-input" %>
+        <%= form.radio_button :competence, competence, class: "form-check-label", id: competence %>
       </div>
     <% end %>
-    <div class="col-9 text-danger small">
-      <%= job_application.errors.full_messages_for(:competence).first %>
-    </div>
+
+    <% unless job_application.errors.full_messages_for(:competence).empty? %>
+      <div class="col-9 text-danger small apply-form-error">
+        <%= job_application.errors.full_messages_for(:competence).first %>
+      </div>
+    <% end %>
 
     <input type="hidden" name="job_application[job_id]" value="<%= @job_application.job_id %>">
 
     <div class="actions form-group mt-2">
-      <%= form.submit "Apply", class: "btn btn-primary" %>
+      <%= form.submit "Apply", class: "btn btn-primary", id: "apply" %>
       <%= link_to "Back", jobs_path, class: "btn btn-danger" %>
     </div>
   <% end %>

@@ -1,5 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext/date/calculations'
+require 'utils/validators/common'
 
 module JobApplicationValidation
   extend ActiveSupport::Concern
