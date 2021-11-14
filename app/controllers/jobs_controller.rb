@@ -3,7 +3,27 @@ class JobsController < ApplicationController
 
   # GET /jobs or /jobs.json
   def index
-    @jobs = Job.where('start_date <= ?', Time.zone.now).sort_by { |job| job.expires_in }.reverse
+
+    # case [params[:category], params[:term]]
+    # in [String, String]
+    #   category_id = Category.where(title: params[:category])
+    #   @jobs = Jobs.where('start_date <= ?', Time.zone.now).where(category: category_id).where("title like ?", "%#{params[:term]}%")
+    #   in [String,]
+    # end
+
+    @jobs = Job.where('start_date <= ?', Time.zone.now)
+
+    if params[:category]
+      category_id = Category.where(title: params[:category])
+      @jobs = @jobs.where(category_id: category_id)
+    end
+
+    if params[:term]
+      @jobs = @jobs.where("lower(title) like ?", "%#{params[:term].to_s.downcase}%")
+    end
+
+
+    @jobs = @jobs.sort_by { |job| job.expires_in }.reverse
   end
 
   # GET /jobs/new

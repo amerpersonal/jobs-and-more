@@ -1,12 +1,20 @@
-<h2>Jobs</h2>
 <div class="container jobs">
+  <div class="jumbotron pb-2 pt-5 mt-1">
+    <h1 class="display-5">Find the job you dream about !</h1>
+    <p class="lead">The most extensive list of jobs on the market. Get in contact with employee in minimum amount of time</p>
+  </div>
+
   <% flash.each do |type, message| %>
     <div class="alert alert-success" role="alert">
       <%= message %>
     </div>
   <% end %>
 
-  <% @jobs.each do |job| %>
-    <%= render "job_item", job: job %>
+  <% if @jobs.empty? %>
+    <p class="text-secondary">No jobs for this criteria. Please broaden your search</p>
+  <% else %>
+    <% @jobs.each do |job| %>
+      <%= render "job_item", job: job %>
+    <% end %>
   <% end %>
 </div>

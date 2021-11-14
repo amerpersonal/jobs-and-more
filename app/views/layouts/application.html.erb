@@ -33,16 +33,18 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <%= link_to "Home", jobs_path, class:"nav-link" %>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Category (all)
+          Category
         </a>
+
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%= categories.each do |category| %>
-            <%= link_to category.title, jobs_path, class: "dropdown-item" %>
+          <% categories.each do |category| %>
+            <%= link_to category.title, jobs_path(@current_params.merge(category: category.title)), class: "dropdown-item" %>
           <% end %>
+          <%= link_to "All", jobs_path, class: "dropdown-item" %>
 
         </div>
       </li>
@@ -54,20 +56,15 @@
         <% end %>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+
+    <%= form_with url: jobs_path, method: :get, class: "form-inline my-2 my-lg-0" do |form| %>
+      <% unless @current_params[:category].nil? %>
+        <%= form.hidden_field :category, value: @current_params[:category] %>
+      <% end %>
+      <%= form.text_field :term, class: "form-control mr-sm-2", type: "search", placeholder: "Search" %>
+    <% end %>
   </div>
 </nav>
-
-<%# unless alert.nil? %>
-<!--  <p class="alert alert-danger"><%#= alert %></p>-->
-<%# end %>
-
-<%# unless notice.nil? %>
-<!--<p class="alert alert-success"><%#= notice %></p>-->
-<%# end  %>
 
 <div class="container">
 <%= yield %>

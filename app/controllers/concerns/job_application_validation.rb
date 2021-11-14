@@ -5,12 +5,12 @@ require 'utils/validators/common'
 module JobApplicationValidation
   extend ActiveSupport::Concern
 
+  include Utils::Validators::Common
+
   EMAIL_REGEX_PATTERN = /\A(.+)@(.+)\z/
   NAME_REGEX_PATTERN = /\A[^0-9`!@#\$%\^&*+_=]+\z/ # /^[a-z ,.'-]+$/  #[a-zA-Z]\z/
 
   included do
-    include Utils::Validators::Common
-
     validates :competence, presence: true, inclusion: { in: VALID_COMPETENCES, message: "Competence has to be one of #{VALID_COMPETENCES.join(", ")}" }
     validates :first_name, presence: true, length: { minimum: 2, maximum: 40 }, format: { with: NAME_REGEX_PATTERN }
     validates :last_name, presence: true, length: { minimum: 2, maximum: 40 }, format: { with: NAME_REGEX_PATTERN }

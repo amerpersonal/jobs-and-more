@@ -1,5 +1,6 @@
 class JobApplicationsController < ApplicationController
   before_action :set_job, only: %i[ new create index ]
+  before_action :authenticate_user!, only: %i[ index ]
 
   # GET /jobs/:job_id/job_applications/new
   def new
