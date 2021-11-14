@@ -1,16 +1,9 @@
 class JobsController < ApplicationController
   before_action :set_job, only: %i[ destroy ]
+  before_action :authenticate_user!, only: %i[ new create ]
 
   # GET /jobs or /jobs.json
   def index
-
-    # case [params[:category], params[:term]]
-    # in [String, String]
-    #   category_id = Category.where(title: params[:category])
-    #   @jobs = Jobs.where('start_date <= ?', Time.zone.now).where(category: category_id).where("title like ?", "%#{params[:term]}%")
-    #   in [String,]
-    # end
-
     @jobs = Job.where('start_date <= ?', Time.zone.now)
 
     if params[:category]
@@ -22,8 +15,7 @@ class JobsController < ApplicationController
       @jobs = @jobs.where("lower(title) like ?", "%#{params[:term].to_s.downcase}%")
     end
 
-
-    @jobs = @jobs.sort_by { |job| job.expires_in }.reverse
+    @jobs = @jobs.sort_by { |job| job.created_at }.reverse
   end
 
   # GET /jobs/new
@@ -37,27 +29,14 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       if @job.save
-        format.html { redirect_to @job, notice: "Job was successfully created." }
-        format.json { render :show, status: :created, location: @job }
+        format.html { redirect_to jobs_path, notice: "Job was successfully created." }
+        format.json { render :json, { success: true, id: @job.id } }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @job.errors, status: :unprocessable_entity }
       end
     end
   end
-
-  # # PATCH/PUT /jobs/1 or /jobs/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @job.update(job_params)
-  #       format.html { redirect_to @job, notice: "Job was successfully updated." }
-  #       format.json { render :show, status: :ok, location: @job }
-  #     else
-  #       format.html { render :edit, status: :unprocessable_entity }
-  #       format.json { render json: @job.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   # DELETE /jobs/1 or /jobs/1.json
   def destroy

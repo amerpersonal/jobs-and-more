@@ -1,47 +1,84 @@
 <%= form_with(model: job) do |form| %>
-  <% if job.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(job.errors.count, "error") %> prohibited this job from being saved:</h2>
 
-      <ul>
-        <% job.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+  <div class="form-group row">
+    <div class="col-3"><%= form.label :title %></div>
+    <div class="col-9">
+      <%= form.text_field :title, class: "form-control" %>
+      <% unless job.errors.full_messages_for(:title).empty? %>
+
+        <div class="col-9 text-danger small apply-form-error">
+          <%= job.errors.full_messages_for(:title).first %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="form-group row">
+    <div class="col-3"><%= form.label :description %></div>
+    <div class="col-9">
+      <%= form.text_area :description, class: "form-control", rows: 6 %>
+      <% unless job.errors.full_messages_for(:description).empty? %>
+
+        <div class="col-9 text-danger small apply-form-error">
+          <%= job.errors.full_messages_for(:description).first %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :start_date %>
-    <%= form.datetime_select :start_date %>
+  <div class="form-group row">
+    <div class="col-3"><%= form.label :start_date %></div>
+    <div class="col-9">
+      <%= form.text_field :start_date, class: "form-control", "data-provide": "datepicker", "data-date-format": "yyyy-mm-dd" %>
+      <% unless job.errors.full_messages_for(:start_date).empty? %>
+
+        <div class="col-9 text-danger small apply-form-error">
+          <%= job.errors.full_messages_for(:start_date).first %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :end_date %>
-    <%= form.datetime_select :end_date %>
+  <div class="form-group row">
+    <div class="col-3"><%= form.label :end_date %></div>
+    <div class="col-9">
+      <%= form.text_field :end_date, class: "form-control", "data-provide": "datepicker", "data-date-format": "yyyy-mm-dd" %>
+      <% unless job.errors.full_messages_for(:end_date).empty? %>
+
+        <div class="col-9 text-danger small apply-form-error">
+          <%= job.errors.full_messages_for(:end_date).first %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :category_id %>
-    <%= form.text_field :category_id %>
+  <div class="form-group row">
+    <div class="col-3"><%= form.label :category_id, "Category" %></div>
+    <div class="col-9">
+      <%= form.select :category_id, categories_for_select, class: "form-control" %>
+      <% unless job.errors.full_messages_for(:category_id).empty? %>
+
+        <div class="col-9 text-danger small apply-form-error">
+          <%= job.errors.full_messages_for(:category_id).first %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :company_id %>
-    <%= form.text_field :company_id %>
+  <div class="form-group row">
+    <div class="col-3"><%= form.label :company_id, "Company" %></div>
+    <div class="col-9">
+      <%= form.select :company_id, companies_for_select, class: "form-control" %>
+      <% unless job.errors.full_messages_for(:company_id).empty? %>
+
+        <div class="col-9 text-danger small apply-form-error">
+          <%= job.errors.full_messages_for(:company_id).first %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Add", class: "btn btn-primary" %>
   </div>
 <% end %>

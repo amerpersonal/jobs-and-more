@@ -16,8 +16,9 @@
 
   <script type='text/javascript'>
       $(document).ready(function () {
-          console.log("amer");
-          $('.datepicker').datepicker({format: 'yy-mm-dd', startDate: '01/01/1990'});
+          // $('.datepicker').datepicker({format: 'yy-mm-dd', startDate: '01/01/1990'});
+          $('.datepicker').datepicker({format: 'yyyy-mm-dd', startDate: '01/01/1990'});
+
       });
   </script>
 </head>
@@ -32,9 +33,6 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <%= link_to "Home", jobs_path, class:"nav-link" %>
-      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Category
@@ -48,12 +46,19 @@
 
         </div>
       </li>
-      <li class="nav-item">
-        <% if user_signed_in? %>
-          <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link"  %>
-        <% else %>
-          <%= link_to "Log in", new_user_session_path, class: "nav-link"  %>
-        <% end %>
+
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to "Add new job", new_job_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Log in", new_user_session_path, class: "nav-link" %>
+        </li>
+      <% end %>
       </li>
     </ul>
 
@@ -67,7 +72,7 @@
 </nav>
 
 <div class="container">
-<%= yield %>
+  <%= yield %>
 </div>
 
 </body>

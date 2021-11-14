@@ -1,14 +1,31 @@
+require 'utils/validators/common'
+
 module JobValidation
   extend ActiveSupport::Concern
 
+  include Utils::Validators::Common
+
   included do
-    validate :start_end_dates_valid
+
+    MIN_DESCRIPTION_WORDS_COUNT = 10
+
+    validates :start_date, presence: true
+    validates :end_date, presence: true
     validates :title, presence: true, length: { minimum: 10 }
-    validates :description, presence: true, length: { minimum: 20 }
+    validates :description, presence: true, length: { minimum: 50 }
+
+    validate :start_end_dates_valid
+    validate :validate_description
 
     def start_end_dates_valid
       if start_date.present? && end_date.present? && start_date > end_date
-        errors.add(:end_date, "Need to be after end date")
+        errors.add(:end_date, "needs to be after today")
+      end
+    end
+
+    def validate_description
+      if description.present? && !has_min_words?(description, MIN_DESCRIPTION_WORDS_COUNT)
+        errors.add("Description has to have minimum #{MIN_DESCRIPTION_WORDS_COUNT} words")
       end
     end
   end
@@ -18,11 +35,11 @@ module JobValidation
   end
 
   def started_before
-    ((Time.zone.now - start_date) / 1.day).to_i
+    ((Date.today - start_date) / 1.day).to_i
   end
 
   def expired?
-    started_before >= duration
+    end_date > Date.today
   end
 
   def expires_in

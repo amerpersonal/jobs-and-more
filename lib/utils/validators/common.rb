@@ -44,6 +44,10 @@ module Utils
       def is_adult(birth_date)
         birth_date <= 18.years.ago
       end
+
+      def has_min_words?(text, min_words)
+        text.split(/[^[[:word:]]]+/).length >= min_words
+      end
     end
   end
 end

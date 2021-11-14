@@ -45,7 +45,7 @@ ActiveRecord::Base.transaction do
 
     companies = Company.create(companies_attrs)
 
-    start_date = DateTime.now - 15
+    start_date = Date.today - 15
     duration = 7 # days
     step = 2
     job_attrs = []

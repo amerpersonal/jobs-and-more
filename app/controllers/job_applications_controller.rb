@@ -22,7 +22,7 @@ class JobApplicationsController < ApplicationController
   end
 
   def index
-    @job_applications = @job.job_applications.sort_by { |job| job.id }.reverse #JobApplication.where(job_id: params[:job_id]).order("id desc")
+    @job_applications = @job.job_applications.sort_by { |job| job.id }.reverse
   end
 
   private

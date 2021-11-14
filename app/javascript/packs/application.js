@@ -22,17 +22,17 @@ require("bootstrap");
 require("bootstrap-datepicker");
 import "../stylesheets/application";
 
-$(document).ready(function(){
-    console.log("aaa");
-
-});
+// $(document).ready(function(){
+//     console.log("aaa");
+//
+// });
 
 document.addEventListener("turbolinks:load", function() {
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
 
-        $('.datepicker').datepicker({ format: 'yy-mm-dd', startDate: '01/01/1990' });
+        $('.datepicker').datepicker({ format: 'yyyy-mm-dd', startDate: '01/01/1990' });
 
     })
 })

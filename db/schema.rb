@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 2021_11_14_061515) do
     t.string "competence", limit: 3, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_job_applications_on_email"
     t.index ["job_id", "email"], name: "index_job_applications_on_job_id_and_email", unique: true
     t.index ["job_id"], name: "index_job_applications_on_job_id"
   end
@@ -50,15 +49,14 @@ ActiveRecord::Schema.define(version: 2021_11_14_061515) do
   create_table "jobs", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date "start_date"
+    t.date "end_date"
     t.bigint "category_id", null: false
     t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_jobs_on_category_id"
     t.index ["company_id"], name: "index_jobs_on_company_id"
-    t.index ["title"], name: "index_jobs_on_title"
   end
 
   create_table "users", force: :cascade do |t|
