@@ -29,7 +29,7 @@
   <div class="form-group row">
     <div class="col-3"><%= form.label :start_date %></div>
     <div class="col-9">
-      <%= form.text_field :start_date, class: "form-control", "data-provide": "datepicker", "data-date-format": "yyyy-mm-dd" %>
+      <%= form.text_field :start_date, class: "form-control datepicker" %>
       <% unless job.errors.full_messages_for(:start_date).empty? %>
 
         <div class="col-9 text-danger small apply-form-error">
@@ -42,7 +42,7 @@
   <div class="form-group row">
     <div class="col-3"><%= form.label :end_date %></div>
     <div class="col-9">
-      <%= form.text_field :end_date, class: "form-control", "data-provide": "datepicker", "data-date-format": "yyyy-mm-dd" %>
+      <%= form.text_field :end_date, class: "form-control datepicker" %>
       <% unless job.errors.full_messages_for(:end_date).empty? %>
 
         <div class="col-9 text-danger small apply-form-error">

@@ -48,6 +48,10 @@ module Utils
       def has_min_words?(text, min_words)
         text.split(/[^[[:word:]]]+/).length >= min_words
       end
+
+      def valid_competences
+        VALID_COMPETENCES
+      end
     end
   end
 end

@@ -3,13 +3,13 @@ require 'date'
 require 'utils/validators/common'
 
 RSpec.describe JobApplication, type: :model do
-  let(:category) { Category.create(title: "Dummy category") }
-  let(:company) { Company.create(name: "Some company", email: "some.company@gmail.com") }
-  let(:job) { Job.create(
-    title: "job title",
-    description: 'job description',
+  let(:category) { Category.create!(title: "Dummy category") }
+  let(:company) { Company.create!(name: "Some company", email: "some.company@gmail.com") }
+  let(:job) { Job.create!(
+    title: "UI/UX designer",
+    description: 'here is some job description for dummy job posting, I hope you gonna like it',
     start_date: Date.today,
-    end_date: Date.today,
+    end_date: Date.today + 1,
     category: category,
     company: company)
   }

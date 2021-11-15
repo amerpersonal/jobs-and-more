@@ -1,6 +1,7 @@
 require 'utils/validators/common'
+require 'utils/expirable'
 
-module JobValidation
+module JobConcern
   extend ActiveSupport::Concern
 
   include Utils::Validators::Common
@@ -28,46 +29,38 @@ module JobValidation
         errors.add("Description has to have minimum #{MIN_DESCRIPTION_WORDS_COUNT} words")
       end
     end
+
+  end
+
+  def expirable
+    Utils::Expirable.new(self)
   end
 
   def duration
-    ((end_date - start_date) / 1.day).to_i
+    expirable.duration
   end
 
   def started_before
-    ((Date.today - start_date) / 1.day).to_i
+    expirable.started_before
   end
 
   def expired?
-    end_date > Date.today
+    expirable.expired?
   end
 
   def expires_in
-    duration - started_before
+    expirable.expires_in
   end
 
+  def expired_ago
+    expirable.expired_ago
+  end
 
   def progress_value
-    if expired?
-      duration
-    else
-      started_before
-    end
+    expirable.progress_value
   end
 
   def progress_value_percentage
-    if expired?
-      100
-    else
-      (started_before.to_f / duration.to_f) * 100
-    end
-  end
-
-  def progress_tooltip_text
-    if expired?
-      "Job posting expired " + (started_before - duration).to_s + " days ago"
-    else
-      "Job posting opened " + started_before.to_s + " day ago, expires in " + expires_in.to_s + " days"
-    end
+    expirable.progress_value_percentage
   end
 end

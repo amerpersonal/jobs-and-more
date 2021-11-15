@@ -29,7 +29,7 @@
     <div class="form-group row">
       <div class="col-3"><%= form.label :birth_date %></div>
       <div class="col-9">
-        <%= form.text_field :birth_date, class: "form-control", "data-provide": "datepicker", "data-date-format": "yyyy-mm-dd", "data-start-date": "1990-01-01" %>
+        <%= form.text_field :birth_date, class: "form-control datepicker" %>
         <% unless job_application.errors.full_messages_for(:birth_date).empty? %>
 
           <div class="col-9 text-danger small apply-form-error">

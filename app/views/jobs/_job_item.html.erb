@@ -44,8 +44,8 @@
 
       </div>
       <div class="col-3">
-        <div class="progress" data-toggle="tooltip" data-placement="top" title="<%= job.progress_tooltip_text %>">
-          <div class="progress-bar" role="progressbar" style="width: <%= job.progress_value_percentage %>%" aria-valuenow="<%= job.progress_value %>" aria-valuemin="0" aria-valuemax="<%= job.duration %>"></div>
+        <div class="progress" data-toggle="tooltip" data-placement="top" title="<%= progress_tooltip_text(job) %>">
+          <div class="progress-bar" role="progressbar" style="width: <%= job.progress_value_percentage %>%" aria-valuenow="<%= job.progress_value %>" aria-valuemin="0" aria-valuemax="<%= pluralize(job.duration, "days") %>"></div>
         </div>
       </div>
     </div>
@@ -62,7 +62,7 @@
             <a href="<%= new_job_job_application_path(job) %>" class="<%= apply_btn_class %>">Apply now</a>
           </div>
           <div class="pl-2">
-            <a href="#" class="badge badge-info job-applications-count" data-toggle="tooltip" data-placement="right" title="<%= job.job_applications.size %> people applied to this job"><%= job.job_applications.size %></a>
+            <a href="#" class="badge badge-info job-applications-count" data-toggle="tooltip" data-placement="right" title="<%= pluralize(job.job_applications.size, "person") %> applied to this job"><%= job.job_applications.size %></a>
           </div>
         </div>
       </div>

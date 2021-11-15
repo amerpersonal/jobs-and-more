@@ -4,18 +4,7 @@ class JobsController < ApplicationController
 
   # GET /jobs or /jobs.json
   def index
-    @jobs = Job.where('start_date <= ?', Time.zone.now)
-
-    if params[:category]
-      category_id = Category.where(title: params[:category])
-      @jobs = @jobs.where(category_id: category_id)
-    end
-
-    if params[:term]
-      @jobs = @jobs.where("lower(title) like ?", "%#{params[:term].to_s.downcase}%")
-    end
-
-    @jobs = @jobs.sort_by { |job| job.created_at }.reverse
+    @jobs = BrowseJobsQuery.new().browse_jobs(params)
   end
 
   # GET /jobs/new
@@ -29,11 +18,9 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       if @job.save
-        format.html { redirect_to jobs_path, notice: "Job was successfully created." }
-        format.json { render :json, { success: true, id: @job.id } }
+        redirect_to jobs_path, notice: "Job was successfully created."
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
+        render json: @job.errors, status: :unprocessable_entity
       end
     end
   end

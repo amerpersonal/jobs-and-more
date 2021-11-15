@@ -1,0 +1,19 @@
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1>You successfully applied for a job <%= @job_application.job.title %></h1>
+
+<p>
+  You should get answer in 3 working days. <br/><br/>
+</p>
+<p>
+  You can always reach out to the company via email <%= @job_application.job.company.email %>
+</p>
+<p>
+  For more jobs, open: <a href="<%= jobs_url %>">Jobs page</a>. Happy browsing!
+</p>
+<p>Thanks for applying and have a great day!</p>
+</body>
+</html>

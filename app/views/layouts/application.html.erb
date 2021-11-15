@@ -16,8 +16,21 @@
 
   <script type='text/javascript'>
       $(document).ready(function () {
-          // $('.datepicker').datepicker({format: 'yy-mm-dd', startDate: '01/01/1990'});
-          $('.datepicker').datepicker({format: 'yyyy-mm-dd', startDate: '01/01/1990'});
+
+
+          const endDate = new Date();
+          endDate.setFullYear(endDate.getFullYear() - 18);
+          const endDateStr = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
+
+          console.log(`xxx endDateStr: ${endDateStr}`);
+          $('#job_application_birth_date').datepicker({ format: 'yyyy-mm-dd', autoclose: true, startDate: '1920-01-01', endDate: endDateStr });
+
+          const startDate = new Date();
+          const startDateStr = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+
+          $('#job_start_date').datepicker({ format: 'yyyy-mm-dd', autoclose: true, startDate: startDateStr });
+
+          $('#job_end_date').datepicker({ format: 'yyyy-mm-dd', autoclose: true });
 
       });
   </script>

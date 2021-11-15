@@ -6,19 +6,14 @@ Rails.application.routes.draw do
     resources :job_applications, only: ["new", "create", "index"]
   end
 
-  resources :companies
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
 
-  # devise_for :users, path: '', path_names: {
-  #   # get '/login' => 'users/sessions#new'
-  #   # get '/logout' => 'users/sessions#destroy'
-  #   # get '/add' => 'users/registrations#new'
-  #
-  #   :sign_in => 'login',
-  #   :sign_out => 'logout',
-  #   :sign_up => 'users/add'
-  # }
+  namespace :api do
+    namespace :v1 do
+      resources :jobs, only: ["index"]
+    end
+  end
 end

@@ -18,5 +18,7 @@ module JobsAndMore
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.test_user_pass = ENV['TEST_USER_PASS']
   end
 end

@@ -50,7 +50,6 @@ Rails.application.configure do
     :domain => 'localhost:3000',
     :user_name => ENV["MAIL_USERNAME"],
     :password => ENV["MAIL_PASSWORD"],
-    :password => 'jam11sa22',
     :authentication => 'plain',
     :enable_starttls_auto => true
   }

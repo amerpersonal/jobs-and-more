@@ -58,8 +58,6 @@ RSpec.describe "Job page", type: :system do
   it "successfully applies for the job and increment applications counter" do
     visit jobs_path
 
-    number_of_applications_before_apply = find(".job-item .job-applications-count", match: :first)["innerHtml"].to_i
-
     first_apply_button = find(".job-item .apply", match: :first)
     first_apply_button.click
 
@@ -76,9 +74,7 @@ RSpec.describe "Job page", type: :system do
 
     sleep(5)
     visit jobs_path
-
-    number_of_applications_after_apply = find(".job-item .job-applications-count", match: :first)["innerHtml"].to_i
-
+    
     expect(current_path).to eq(jobs_path)
 
   end

@@ -3,7 +3,7 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-<h1>You successfully applied for a job <%= @job_application.job.title %></h1>
+<h1>You have a new job application for a position <%= @job_application.job.title %></h1>
 <p>
   Contact info
   <ul>
@@ -14,7 +14,8 @@
   </ul>
 </p>
 <p>
-  For more jobs, open: <a href="#">Jobs page</a>. Happy browsing!
+  To add more jobs, go to: <a href="<%= new_job_url %>">Add job page</a>. Happy hiring!
+
 </p>
 <p>Thanks for applying and have a great day!</p>
 </body>
