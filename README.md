@@ -53,6 +53,7 @@ Tests are executed against test database and no mocking is used. Not all functio
 
 The project contains only POC and it shoule be further developed, both in terms of technical improvements and adding new functionalities. Things that could be improved and added:
 
+- send email asynchronously using Sidekiq gem or ruby 3 reactors
 - better code coverage with tests
 - full API for all endpoints
 - add option for user to add job to wish list and gets notification a few days before job expiration
