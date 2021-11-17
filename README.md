@@ -24,6 +24,18 @@ To run locally:
 
 Of course, we might create a Dockerfile to run an app in a docker container, but it was not done it this showcase
 
+### API
+
+As a showcase, small API is made, for developing mobile applications. There is a single request, for browsing jobs:
+
+```
+curl --location --request GET 'http://localhost:3000/api/v1/jobs' \
+--header 'Cookie: __profilin=p%3Dt' \
+--data-raw ''
+```
+
+It returns data in json format.
+
 ### Tests
 
 There are three types of tests:
@@ -34,4 +46,19 @@ There are three types of tests:
 
 To run all tests, type: `bundle exec rspec`
 
-Tests are executed against test database and no mocking is used. Not all functionalities are covered with tests
+Tests are executed against test database and no mocking is used. Not all functionalities are covered with tests.
+
+### Further work
+
+The project contains only POC and it shoule be further developed, both in terms of technical improvements and adding new functionalities. Things that could be improved and added:
+
+- better code coverage with tests
+- full API for all endpoints
+- add option for user to add job to wish list and gets notification a few days before job expiration
+- matching jobs for user based on his preferences
+- messaging between job seekers and companies
+- performance improvements (some of them are already done on browsing jobs page) - avoid stressing database to much with Active Record default behavior
+- categories page
+- CRUD for adding category and company
+- reports for companies
+- many more
