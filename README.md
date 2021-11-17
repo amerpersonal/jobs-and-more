@@ -21,6 +21,7 @@ To run locally:
 4. Run `bin/rails db:migrate` to migrate database. No need to seed test database, since we're doing seed before executing each spec and cleaning it with DatabaseCleaneru afterwards
 5. Run `yarn add bootstrap jquery @popper.js/core` (if it reports error `Yarn not found`, probably the nvm version is outdated)
 6. Run `./bin/rails db:migrate db:test:prepare` to prepaare test database
+7. Set environment variable `TEST_USER_PASS` to desired value. This is the password of user which will be seeded as administrator
 
 Of course, we might create a Dockerfile to run an app in a docker container, but it was not done it this showcase
 
