@@ -1,24 +1,37 @@
-# README
+# Jobs and More
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Hiring tool for companies and job seekers.
 
-Things you may want to cover:
+### Prerequisites
 
-* Ruby version
+Application is built with:
 
-* System dependencies
+- ruby 3.0.2
+- Rails 6.1.4.1
+- Postgres 13.3
+- nvm 12.14.1
 
-* Configuration
+### Running locally
 
-* Database creation
+To run locally:
 
-* Database initialization
+1. Clone this repository and navigate into root
+2. bundle install to install needed gems
+3. Run `bin/rails db:create` to create databases for each environment
+4. Run `bin/rails db:migrate` to migrate database. No need to seed test database, since we're doing seed before executing each spec and cleaning it with DatabaseCleaneru afterwards
+5. Run `yarn add bootstrap jquery @popper.js/core` (if it reports error `Yarn not found`, probably the nvm version is outdated)
+6. Run `./bin/rails db:migrate db:test:prepare` to prepaare test database
 
-* How to run the test suite
+Of course, we might create a Dockerfile to run an app in a docker container, but it was not done it this showcase
 
-* Services (job queues, cache servers, search engines, etc.)
+### Tests
 
-* Deployment instructions
+There are three types of tests:
 
-* ...
+- function tests, done with RSpec
+- models tests, done with RSpec
+- system tests done with Capybara
+
+To run all tests, type: `bundle exec rspec`
+
+Tests are executed against test database and no mocking is used. Not all functionalities are covered with tests
